@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>F1 2023 Driver Standings Prediction</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+          
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+
+</head>
+<body>
+	<h1>F1 2023 Driver Standings Prediction</h1>
+	<div class="list-container">
+        <ul id="sortable">
+            <li class="ui-state-default" data-team="Mercedes"> <div class="driver-name"> Lewis Hamilton</div></li>
+            <li class="ui-state-default" data-team="Mercedes"> <div class="driver-name"> George Russell</div></li>
+            <li class="ui-state-default" data-team="Red Bull"><div class="driver-name"> Max Verstappen</div></li>
+            <li class="ui-state-default" data-team="Red Bull"><div class="driver-name"> Sergio Perez</div></li>
+            <li class="ui-state-default" data-team="McLaren"><div class="driver-name"> Lando Norris </div></li>
+            <li class="ui-state-default" data-team="McLaren"><div class="driver-name"> Oscar Piastri </div></li>
+            <li class="ui-state-default" data-team="Ferrari"><div class="driver-name"> Charles Leclerc</div></li>
+            <li class="ui-state-default" data-team="Ferrari"><div class="driver-name"> Carlos Sainz</div></li>
+            <li class="ui-state-default" data-team="Alpine"><div class="driver-name"> Pierre Gasly</div></li>
+            <li class="ui-state-default" data-team="Alpine"><div class="driver-name"> Esteban Ocon</div></li>
+            <li class="ui-state-default" data-team="AlphaTauri"><div class="driver-name"> Yuki Tsunoda </div></li>
+            <li class="ui-state-default" data-team="AlphaTauri"><div class="driver-name"> Nyck de Vries  </div></li>
+            <li class="ui-state-default" data-team="Aston Martin"><div class="driver-name"> Fernando Alonso</div></li>
+            <li class="ui-state-default" data-team="Aston Martin"><div class="driver-name">Lance Stroll</div></li>
+            <li class="ui-state-default" data-team="Alfa Romeo"><div class="driver-name">Zhou Guanyu</div></li>
+            <li class="ui-state-default" data-team="Alfa Romeo"><div class="driver-name">Valtteri Bottas</div></li>
+            <li class="ui-state-default" data-team="Williams"><div class="driver-name">Logan Sargeant </div></li>
+            <li class="ui-state-default" data-team="Williams"><div class="driver-name">Alex Albon </div></li>
+            <li class="ui-state-default" data-team="Haas"><div class="driver-name"> Kevin Magnussen </div></li>
+            <li class="ui-state-default" data-team="Haas"><div class="driver-name"> Nico Hulkenberg </div></li>
+    </body>
+
+    <script>
+        $( function() {
+    $( "#sortable" ).sortable();
+    $( "#sortable" ).disableSelection();
+    var list = $( "#sortable" );
+    var items = list.find('.ui-state-default');
+    items.each(function(i, el) {
+      var team = $(el).data('team');
+      var logoUrl = getLogoUrl(team);
+      var bgColor = getTeamColor(team);
+      $(el).css('background-color', bgColor);
+      var logo = $('<img>').    attr('src', logoUrl)
+      .addClass('team-logo');
+    $(el).prepend(logo);
+    $(el).prepend('<span class="item-number">' + (i + 1) + ' </span>');
+  });
+  list.on('sortupdate', function() {
+    items.each(function(i, el) {
+      $(el).find('.item-number').text(i + 1);
+    });
+  });
+  $('#share-button').click(function() {
+    html2canvas(document.getElementById('sortable')).then(function(canvas) {
+      var link = document.createElement('a');
+      link.download = 'sortable-list.png';
+      link.href = canvas.toDataURL();
+      link.click();
+    });
+  });
+});
+
+function getLogoUrl(team) {
+    var link = 'https://www.formula1.com/content/dam/fom-website/teams/2021/';
+    var teamName = '';
+  switch(team) {
+    case 'Mercedes':
+        teamName = 'mercedes-logo.png';
+        break;
+    case 'Red Bull':
+    teamName = 'red-bull-racing-logo.png';
+    break;
+    case 'McLaren':
+    teamName = 'mclaren-logo.png';
+    break;
+    case 'Ferrari':
+    teamName = 'ferrari-logo.png';
+    break;
+    case 'Alpine':
+        
+    teamName = 'alpine-logo.png';
+    break;
+    case 'AlphaTauri':
+      
+    teamName = 'alphatauri-logo.png';
+    break;
+    case 'Aston Martin':
+      
+    teamName = 'aston-martin-logo.png';
+    break;
+    case 'Alfa Romeo':
+     teamName = 'alfa-romeo-racing-logo.png';
+     break;
+    case 'Williams':
+    return 'https://upload.wikimedia.org/wikipedia/commons/f/f9/Logo_Williams_F1.png';
+    case 'Haas':
+    teamName = 'haas-f1-team-logo.png';
+    break;
+    default:
+      return '';
+  }
+  return link + teamName;
+}
+
+function getTeamColor(team) {
+  switch(team) {
+    case 'Mercedes':
+      return '#00D2BE';
+    case 'Red Bull':
+      return '#1E41FF';
+    case 'McLaren':
+      return '#FF8700';
+    case 'Ferrari':
+      return '#DC0000';
+    case 'Alpine':
+      return '#0090FF';
+    case 'AlphaTauri':
+      return '#2B4562';
+    case 'Aston Martin':
+      return '#006F62';
+    case 'Alfa Romeo':
+      return '#900000';
+    case 'Williams':
+      return '#005AFF';
+    case 'Haas':
+      return '#757575';
+    default:
+      return '';
+  }
+}
+
+    </script>
+</html>
